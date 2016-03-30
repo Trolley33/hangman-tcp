@@ -62,7 +62,7 @@ def handler(c, addr):
             if split[0][0] == '#':
                 # Login
                 if split[0] == "#login" and len(split) == 3:
-                    with open("login.txt", 'r') as f:
+                    with open("logins.txt", 'r') as f:
                         lines = [x.strip('\n') for x in f.readlines() if x != '\n']
                     if "{},{}".format(split[1], split[2]) in lines:
                         c.send("#loggedin".encode('utf-8'))
@@ -70,11 +70,11 @@ def handler(c, addr):
                         c.send("#error:badlogin".encode('utf-8'))
                 # Signup
                 elif split[0] == "#signup" and len(split) == 3:
-                    with open("login.txt", 'r') as f:
+                    with open("logins.txt", 'r') as f:
                         lines = [x.strip('\n').split(',') for x in f.readlines() if x != '\n']
                     if not [x for x in lines if x[0] == split[1]]:
                         lines.append([split[1], split[2]])
-                        with open("login.txt", 'w') as f:
+                        with open("logins.txt", 'w') as f:
                             f.write('\n'.join([','.join(x) for x in lines]))
                         c.send("#signedup".encode('utf-8'))
                     else:

@@ -169,11 +169,12 @@ class Letters:
                 except Exception as e:
                     print(e)
         else:
-            self.main.game.tries -= 1
-            if self.main.game.tries < 0:
+            if self.main.game.tries - 1 < 0:
                 self.main.popup("info", "You've lost!")
                 self.main.game.lost = True
                 self.disable()
+            else:
+                self.main.game.tries -= 1
         self.main.game.hangman.configure(image=self.main.game.photos[9-self.main.game.tries])
         self.main.game.hangman.image = self.main.game.photos[9-self.main.game.tries]
 
@@ -188,7 +189,7 @@ class Game:
         # Pictures
         self.photos = dict()
         for i in range(0, 10):
-            self.photos[i] = tk.PhotoImage(file="{}.gif".format(i))
+            self.photos[i] = tk.PhotoImage(file="images/{}.gif".format(i))
 
         self.hangman = tk.Label(image=self.photos[0])
         self.hangman.image = self.photos[0]
